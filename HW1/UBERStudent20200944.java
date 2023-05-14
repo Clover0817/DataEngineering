@@ -12,8 +12,8 @@ import org.apache.hadoop.util.GenericOptionsParser;
 
 public class UBERStudent20200944{
 
-	public static class UBERMapper extends Mapper<LongWritable, Text, Text, LongWritable>{
-		public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException 
+	public static class UBERMapper extends Mapper<Object, Text, Text, Text>{
+		public void map(Object key, Text value, Context context) throws IOException, InterruptedException 
 		{
 		    String[] uber = value.toString().split(",");
 		    String region = uber[0];
