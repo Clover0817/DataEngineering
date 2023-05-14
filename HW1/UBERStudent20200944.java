@@ -1,6 +1,4 @@
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.*;
 
 import org.apache.hadoop.conf.*;
@@ -11,7 +9,6 @@ import org.apache.hadoop.mapreduce.*;
 import org.apache.hadoop.mapreduce.lib.input.*;
 import org.apache.hadoop.mapreduce.lib.output.*;
 import org.apache.hadoop.util.GenericOptionsParser;
-
 
 public class UBERStudent20200944{
 
@@ -35,14 +32,14 @@ public class UBERStudent20200944{
 
 	public static class UBERReducer extends Reducer<Text,Text,Text,Text> 
 	{
-		private Text result = new Text();
+		private Text word = new Text();
 
-		public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException 
+		public void reduce(Text key, Iterable<Text> value, Context context) throws IOException, InterruptedException 
 		{
 		    int tripAll = 0;
 		    int vehicleAll = 0;
 
-		    for (Text val : values) {
+		    for (Text val : value) {
 			String line = val.toString();
 			String[] tripVehicle = line.split(",");
 
@@ -53,10 +50,9 @@ public class UBERStudent20200944{
 			vehicleAll += vehicle;
 		    }
 
-		    String info = Integer.toString(tripAll)+","+Integer.toString(vehicleAll);
-		    result.set(info);
-		    context.write(key, result);
-       	       }
+		    word.set(Integer.toString(tripAll)+","+Integer.toString(vehicleAll));
+		    context.write(key, word);
+       		}
 	}
 
 	public static void main(String[] args) throws Exception 
