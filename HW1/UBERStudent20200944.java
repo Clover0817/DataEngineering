@@ -32,7 +32,7 @@ public class UBERStudent20200944{
 
 		      Text regionDate = new Text(region+","+day);
 		      Text tripVehicle = new Text(trips+","+vehicles);
-					context.write(regionDate, tripVehicle);
+		      context.write(regionDate, tripVehicle);
 		}
 	}
 
