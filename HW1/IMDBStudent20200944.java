@@ -61,7 +61,7 @@ public class IMDBStudent20200944{
 		job.setJarByClass(IMDBStudent20200944.class);
 		job.setMapperClass(IMDBMapper.class);
 		job.setReducerClass(IMDBReducer.class);
-        job.setCombinerClass(IMDBReducer.class);
+        	job.setCombinerClass(IMDBReducer.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(LongWritable.class);
 		FileInputFormat.addInputPath(job, new Path(otherArgs[0]));
