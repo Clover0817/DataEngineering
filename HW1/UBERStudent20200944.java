@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.*;
 
 import org.apache.hadoop.conf.*;
@@ -14,25 +16,20 @@ import org.apache.hadoop.util.GenericOptionsParser;
 public class UBERStudent20200944{
 
 	public static class UBERMapper extends Mapper<LongWritable, Text, Text, LongWritable>{
-
 		public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException 
 		{
-		      String[] uber = value.toString().split(",");
-		      String region = uber[0];
-		      String date = uber[1];
-		      String vehicles = uber[2];
-		      String trips = uber[3];
-			
-		      String[] days = {"SUN", "MON", "TUE", "WED", "THR", "FRI", "SAT"};
-		      String[] dateInfo = date.split("/");
-		      String month = dateInfo[0];
-		      int num = Integer.parseInt(dateInfo[1]);
-		      String day = days[num];
-		      String year = dateInfo[2];
-
-		      Text regionDate = new Text(region+","+day);
-		      Text tripVehicle = new Text(trips+","+vehicles);
-		      context.write(regionDate, tripVehicle);
+		    String[] uber = value.toString().split(",");
+		    String region = uber[0];
+		    String date = uber[1];
+		    String vehicles = uber[2];
+		    String trips = uber[3];
+		
+		    String[] days = {"SUN", "MON", "TUE", "WED", "THR", "FRI", "SAT"};
+           	    Date day = new Date(date);
+		    String dayOfWeek= days[day.getDay()];
+		    Text regionDate = new Text(region + "," + dayOfWeek);
+		    Text tripVehicle = new Text(trips + "," + vehicles);
+		    context.write(regionDate, tripVehicle);
 		}
 	}
 
