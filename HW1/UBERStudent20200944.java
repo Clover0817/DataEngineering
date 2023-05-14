@@ -17,22 +17,22 @@ public class UBERStudent20200944{
 
 		public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException 
 		{
-			String[] uber = value.toString().split(",");
-			String region = uber[0];
-			String date = uber[1];
-			String vehicles = uber[2];
-			String trips = uber[3];
+		      String[] uber = value.toString().split(",");
+		      String region = uber[0];
+		      String date = uber[1];
+		      String vehicles = uber[2];
+		      String trips = uber[3];
 			
-      String[] days = {"SUN", "MON", "TUE", "WED", "THR", "FRI", "SAT"};
-      String[] dateInfo = date.split("/");
-      String month = dateInfo[0];
-      int num = Integer.parseInt(dateInfo[1]);
-      String day = days[num];
-      String year = dateInfo[2];
-        
-      Text regionDate = new Text(region+","+day);
-      Text tripVehicle = new Text(trips+","+vehicles);
-			context.write(regionDate, tripVehicle);
+		      String[] days = {"SUN", "MON", "TUE", "WED", "THR", "FRI", "SAT"};
+		      String[] dateInfo = date.split("/");
+		      String month = dateInfo[0];
+		      int num = Integer.parseInt(dateInfo[1]);
+		      String day = days[num];
+		      String year = dateInfo[2];
+
+		      Text regionDate = new Text(region+","+day);
+		      Text tripVehicle = new Text(trips+","+vehicles);
+					context.write(regionDate, tripVehicle);
 		}
 	}
 
@@ -42,25 +42,24 @@ public class UBERStudent20200944{
 
 		public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException 
 		{
-            int tripAll = 0;
-            int vehicleAll = 0;
+		    int tripAll = 0;
+		    int vehicleAll = 0;
 
-            for (Text val : values) {
-                String line = val.toString();
-                String[] tripVehicle = line.split(",");
+		    for (Text val : values) {
+			String line = val.toString();
+			String[] tripVehicle = line.split(",");
 
-                int trip = Integer.parseInt(tripVehicle[0]);
-                int vehicle = Integer.parseInt(tripVehicle[1]);
+			int trip = Integer.parseInt(tripVehicle[0]);
+			int vehicle = Integer.parseInt(tripVehicle[1]);
 
-                tripAll += trip;
-                vehicleAll += vehicle;
-            }
-            
-            String info = Integer.toString(tripAll)+","+Integer.toString(vehicleAll);
-            result.set(info);
-            context.write(key, result);
-        }
-		}
+			tripAll += trip;
+			vehicleAll += vehicle;
+		    }
+
+		    String info = Integer.toString(tripAll)+","+Integer.toString(vehicleAll);
+		    result.set(info);
+		    context.write(key, result);
+       	       }
 	}
 
 	public static void main(String[] args) throws Exception 
