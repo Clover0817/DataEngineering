@@ -34,13 +34,7 @@ public class IMDBStudent20200944 {
         String joinKey = new String();
         String table = new String();
 
-        public int compareTo(Object o1) {
-            DoubleString o = (DoubleString) o1;
-            int ret = joinKey.compareTo( o.joinKey );
-            if (ret != 0) return ret;
-            return table.compareTo( o.table);
-        }
-
+        public DoubleString() {}
         public DoubleString(String joinKey, String table) {
             this.joinKey = joinKey;
             this.table = table;
@@ -54,6 +48,13 @@ public class IMDBStudent20200944 {
         public void write(DataOutput out) throws IOException {
             out.writeUTF(joinKey);
             out.writeUTF(table);
+        }
+
+        public int compareTo(Object o1) {
+            DoubleString o = (DoubleString) o1;
+            int ret = joinKey.compareTo( o.joinKey );
+            if (ret != 0) return ret;
+            return table.compareTo(o.table);
         }
 
         public String toString() { 
@@ -100,10 +101,10 @@ public class IMDBStudent20200944 {
 
     public static class IMDBComparator implements Comparator<IMDB> {
         @Override
-        public int compare(IMDB o1, IMDB o2) {
-            if (o1.rating > o2.rating) {
+        public int compare(IMDB i1, IMDB i2) {
+            if (i1.rating > i2.rating) {
                 return 1;
-            } else if (o1.rating == o2.rating) {
+            } else if (i1.rating == i2.rating) {
                 return 0;
             } else {
                 return -1;
